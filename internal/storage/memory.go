@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"sync"
 	"tasks-api/internal/models"
+	"time"
 )
 
 // MemoryStorage - хранилище задач в оперативной памяти
@@ -41,6 +42,9 @@ func (s *MemoryStorage) Create(task models.Task) (models.Task, error) {
 	task.ID = s.nextID
 	s.nextID++
 
+	// Генерируем время создания
+	task.CreatedAt = time.Now().Format(time.RFC3339)
+
 	s.tasks[task.ID] = task
 	return task, nil
 }
@@ -54,18 +58,22 @@ func (s *MemoryStorage) Get(id int) (models.Task, bool) {
 	return task, exists
 }
 
-// Update - обновляет задачу по ID
+// Update - обновляет задачу
 func (s *MemoryStorage) Update(id int, task models.Task) (models.Task, error) {
 	s.mu.Lock()
 	defer s.mu.Unlock()
 
-	if _, exists := s.tasks[id]; !exists {
+	existing, exists := s.tasks[id]
+	if !exists {
 		return models.Task{}, fmt.Errorf("task with id %d not found", id)
 	}
 
-	task.ID = id
-	s.tasks[id] = task
-	return task, nil
+	// Обновляем только title и done, created_at оставляем старый
+	existing.Title = task.Title
+	existing.Done = task.Done
+
+	s.tasks[id] = existing
+	return existing, nil
 }
 
 // Delete - удаляет задачу по ID

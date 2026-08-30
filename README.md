@@ -9,16 +9,21 @@ go run ./cmd/server/main.go
 ```
 
 
-Эндпоинты
-Метод	URL	Описание
-GET	/tasks	Получить все задачи
-POST	/tasks	Создать задачу
-GET	/tasks/{id}	Получить задачу по ID
-PUT	/tasks/{id}	Обновить задачу
-DELETE	/tasks/{id}	Удалить задачу
+## Эндпоинты
+
+**GET** `/tasks` — Получить все задачи
+
+**POST** `/tasks` — Создать задачу
+
+**GET** `/tasks/{id}` — Получить задачу по ID
+
+**PUT** `/tasks/{id}` — Обновить задачу
+
+**DELETE** `/tasks/{id}` — Удалить задачу
 
 
-Примеры запросов
+## Эндпоинты
+
 Создать задачу
 ```bash
 curl -X POST http://localhost:8080/tasks \

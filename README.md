@@ -22,7 +22,7 @@ go run ./cmd/server/main.go
 **DELETE** `/tasks/{id}` — Удалить задачу
 
 
-## Эндпоинты
+## Примеры
 
 Создать задачу
 ```bash
